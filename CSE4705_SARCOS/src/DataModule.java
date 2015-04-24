@@ -80,19 +80,6 @@ public class DataModule {
 		loadWorkbook();
 		loadTrainingData();
 		
-		/*
-		int i=0;
-		for (Observation o : _trainSetObs) {
-			i++;
-			System.out.println("Obs: "+i);
-			System.out.println("      Target: "+o.getTarget());
-			System.out.print("      Features: ");
-			for (int j=0; j<21; j++) {
-				System.out.print(o.getFeatures()[j]);
-			}
-			System.out.println();
-		}
-		*/
 	}
 	
 	public void loadTrainingData() {
