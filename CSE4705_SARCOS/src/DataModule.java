@@ -14,6 +14,25 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
+/*************************************************************************************************************************************************
+ *
+ * @author Steve Grasso
+ * 
+ * USE EXAMPLE: 
+ * 
+ * DataModule dataModule = new DataModule();
+ * dataModule.init();													// prompted to select xlsx file containing training data
+ * 
+ * ArrayList<Observation> trainSetObs = getTrainSetObs();				// each observation in the list contains its own features and target
+ * Observation obs = trainSetObs.get(0);								// the features and target can be accessed from an individual observation
+ * float[] features = obs.getFeatures();
+ * float target = obs.getTarget();
+ * 
+ * ArrayList<float[]> features = dataModule.getTrainSetFeatures();		// can access the matrix of features from all observations directly
+ * ArrayList<Float> targets = dataModule.getTrainSetTargets();			// can access the vector of all targets directly
+ *
+ */
+
 
 
 public class DataModule {
@@ -25,12 +44,39 @@ public class DataModule {
 	
 	
 	public DataModule() {
+
+	}
+	
+	public ArrayList<Observation> getTrainSetObs() {
+		return _trainSetObs;
+	}
+	
+	public ArrayList<float[]> getTrainSetFeatures() {
+		ArrayList<float[]> allFeatures = new ArrayList<float[]>(_trainSetObs.size());
 		
+		for (Observation o : _trainSetObs) {
+			allFeatures.add(o.getFeatures());
+		}
+		
+		return allFeatures;
+	}
+	
+	public ArrayList<Float> getTrainSetTargets() {
+		ArrayList<Float> allTargets = new ArrayList<Float>(_trainSetObs.size());
+		
+		for (Observation o : _trainSetObs) {
+			allTargets.add(o.getTarget());
+		}
+		
+		return allTargets;
 	}
 	
 	public void init() {
 		PopupWindowFactory.setLF();
 		_trainSetPath = PopupWindowFactory.fileSelectorPop("Select Training Set", "Load", "TrainingSet.xlsx", PopupWindowFactory.XLSX_FILE_FILTER);
+		if (_trainSetPath == null || !_trainSetPath.exists()) {
+			System.exit(0);
+		}
 		loadWorkbook();
 		loadTrainingData();
 		
@@ -82,23 +128,6 @@ public class DataModule {
 		}
 	}
 	
-	private class Observation {
-		private float[] _features;
-		private float _target;
-		
-		public Observation(float target, float[] features) {
-			_target = target;
-			_features = features;
-		}
-		
-		public float[] getFeatures() {
-			return _features;
-		}
-		
-		public float getTarget() {
-			return _target;
-		}
-	}
 	
 	private static class PopupWindowFactory {
 		public static final int XLSX_FILE_FILTER = 0;
