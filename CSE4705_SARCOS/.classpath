@@ -3,5 +3,7 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/ApachePOI"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/lasso4j"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/LAML"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
