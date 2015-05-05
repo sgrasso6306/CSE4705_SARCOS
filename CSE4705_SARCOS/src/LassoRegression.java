@@ -83,7 +83,8 @@ public class LassoRegression {
 		Matrix Yt = LASSO.predict(testData);
 		
 		double[] originalTargets = new double[500];
-		double[] predictedTargets = new double[500];
+		double[] predictedTargets = new double[500];				// predicted targets
+		double[] coefficients = new double[21];						// coefficients
 		
 		double meanR2 = 0;
 		
@@ -98,6 +99,16 @@ public class LassoRegression {
 		
 		meanR2 = meanR2/testTargets.size();
 		System.out.println("Mean R2: "+meanR2);
+		
+		Matrix W = LASSO.W;
+		
+		for (int i=0; i<21; i++) {
+			coefficients[i] = W.getEntry(i,0);
+			//System.out.println("coefficient "+i+" : "+coefficients[i]);
+		}
+		
+		//System.out.println("Cols: "+W.getColumnDimension());
+		//System.out.println("Rows: "+W.getRowDimension());
 		
 	}
 	
